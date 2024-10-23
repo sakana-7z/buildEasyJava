@@ -1,0 +1,17 @@
+Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
+
+            for (Map.Entry<String, List<FieldInfo>> entry : keyIndexMap.entrySet()) {
+                List<FieldInfo> fieldList = entry.getValue();
+
+                int index = 0;
+                StringBuilder methodName = new StringBuilder();
+                for (FieldInfo field : fieldList) {
+                   index++;
+                   methodName.append(StringUtils.uperCaseFirstLetter(field.getPropertyName()));
+                   if (index < fieldList.size()) {
+                       methodName.append("And");
+                   }
+                }
+                bw.write("    T selectBy" + methodName + "(P param);");
+                bw.newLine();
+            }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductInfoMapper">
+
+    <!--实体映射-->
+    <resultMap type="com.example.entity.po.ProductInfo" id="ProductInfoResultMap">
+        <!-- 自增id-->
+        <id column="tb_product_info.id" property="id"/>
+        <!-- 公司ID-->
+        <result column="tb_product_info.company_id" property="companyId"/>
+        <!-- 商品编号-->
+        <result column="tb_product_info.code" property="code"/>
+        <!-- 商品名字-->
+        <result column="tb_product_info.product_name" property="productName"/>
+        <!-- 价格-->
+        <result column="tb_product_info.price" property="price"/>
+        <!-- sku类型-->
+        <result column="tb_product_info.sku_type" property="skuType"/>
+        <!-- 颜色类型-->
+        <result column="tb_product_info.color_type" property="colorType"/>
+        <!-- 创建时间-->
+        <result column="tb_product_info.create_time" property="createTime"/>
+        <!-- 创建日期-->
+        <result column="tb_product_info.create_date" property="createDate"/>
+        <!-- 库存-->
+        <result column="tb_product_info.stock" property="stock"/>
+        <!-- 状态-->
+        <result column="tb_product_info.status" property="status"/>
+    </resultMap>
+
+    <!--查询-->
+    <select id="selectById" resultType="com.example.entity.po.ProductInfo" parameterType="java.lang.Long">
+        SELECT * FROM tb_product_info WHERE id = #{id}
+    </select>
+
+    <!--动态查询-->
+    <select id="selectList" resultType="com.example.entity.po.ProductInfo">
+        SELECT * FROM tb_product_info
+        <where>
+            <if test="productInfo.id != null"> AND id = #{productInfo.id}</if>
+            <if test="productInfo.companyId != null"> AND company_id = #{productInfo.companyId}</if>
+            <if test="productInfo.code != null"> AND code = #{productInfo.code}</if>
+            <if test="productInfo.productName != null"> AND product_name = #{productInfo.productName}</if>
+            <if test="productInfo.price != null"> AND price = #{productInfo.price}</if>
+            <if test="productInfo.skuType != null"> AND sku_type = #{productInfo.skuType}</if>
+            <if test="productInfo.colorType != null"> AND color_type = #{productInfo.colorType}</if>
+            <if test="productInfo.createTime != null"> AND create_time = #{productInfo.createTime}</if>
+            <if test="productInfo.createDate != null"> AND create_date = #{productInfo.createDate}</if>
+            <if test="productInfo.stock != null"> AND stock = #{productInfo.stock}</if>
+            <if test="productInfo.status != null"> AND status = #{productInfo.status}</if>
+        </where>
+    </select>
+
+    <!--查询全部-->
+    <select id="selectAll" resultType="com.example.entity.po.ProductInfo">        SELECT * FROM tb_product_info
+    </select>
+
+    <!--更新-->
+    <update id="updateById" parameterType="com.example.entity.po.ProductInfo">
+        UPDATE tb_product_info
+        <set>
+            <if test="productInfo.companyId != null">company_id = #{productInfo.companyId},</if>
+            <if test="productInfo.code != null">code = #{productInfo.code},</if>
+            <if test="productInfo.productName != null">product_name = #{productInfo.productName},</if>
+            <if test="productInfo.price != null">price = #{productInfo.price},</if>
+            <if test="productInfo.skuType != null">sku_type = #{productInfo.skuType},</if>
+            <if test="productInfo.colorType != null">color_type = #{productInfo.colorType},</if>
+            <if test="productInfo.createTime != null">create_time = #{productInfo.createTime},</if>
+            <if test="productInfo.createDate != null">create_date = #{productInfo.createDate},</if>
+            <if test="productInfo.stock != null">stock = #{productInfo.stock},</if>
+            <if test="productInfo.status != null">status = #{productInfo.status},</if>
+        </set>
+        WHERE id = #{productInfo.id}
+    </update>
+
+    <!--插入-->
+    <insert id="insert" parameterType="com.example.entity.po.ProductInfo">
+        INSERT INTO tb_product_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="code != null">code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="price != null">price,</if>
+            <if test="skuType != null">sku_type,</if>
+            <if test="colorType != null">color_type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="stock != null">stock,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{ id },</if>
+            <if test="companyId != null">#{ companyId },</if>
+            <if test="code != null">#{ code },</if>
+            <if test="productName != null">#{ productName },</if>
+            <if test="price != null">#{ price },</if>
+            <if test="skuType != null">#{ skuType },</if>
+            <if test="colorType != null">#{ colorType },</if>
+            <if test="createTime != null">#{ createTime },</if>
+            <if test="createDate != null">#{ createDate },</if>
+            <if test="stock != null">#{ stock },</if>
+            <if test="status != null">#{ status },</if>
+        </trim>
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_product_info WHERE id = #{id}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM tb_product_info WHERE id IN 
+        <foreach item="item" index="index" collection="id" open="(" separator="," close=")">
+        #{item}
+        </foreach>
+    </delete>
+
+
+</mapper>
